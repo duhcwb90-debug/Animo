@@ -1,4 +1,4 @@
-# ANIMO - Site Mobile
+# ANIMO - Site RESPONSIVO
 
 Site responsivo da ANIMO Créditos & Investimentos.
 
