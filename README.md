@@ -1,11 +1,966 @@
-# ANIMO - Site RESPONSIVO
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
 
-Site responsivo da ANIMO Créditos & Investimentos.
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ANIMO | Correspondente Bancário - Créditos & Investimentos</title>
+  <meta name="description"
+    content="ANIMO - Correspondente Bancário autorizado. As melhores soluções de crédito, financiamento e investimentos com segurança e transparência." />
 
-## 📱 Como usar
+  <!-- Fonts Google -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap"
+    rel="stylesheet">
 
-Abra o arquivo `ANIMO.html` no navegador.
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-## 📄 Licença
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#0D6A7E',
+            secondary: '#00B876',
+            accent: '#FF8A00',
+            blueaccent: '#2A9D8F',
+            dark: '#0F1419',
+            light: '#F8FAFB',
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            display: ['Plus Jakarta Sans', 'system-ui', 'sans-serif'],
+          },
+          borderRadius: {
+            '3xl': '1.5rem',
+            '4xl': '2rem',
+          },
+          boxShadow: {
+            'smooth': '0 10px 30px -8px rgba(0, 0, 0, 0.08)',
+            'hover': '0 20px 40px -10px rgba(0, 184, 118, 0.15)',
+            'glow': '0 0 30px -5px rgba(0, 184, 118, 0.3)',
+          },
+          animation: {
+            'float': 'floatIcon 3s ease-in-out infinite',
+            'fade-up': 'fadeInUp 0.8s ease-out forwards',
+            'fade-down': 'fadeInDown 0.8s ease-out forwards',
+            'pulse': 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+          }
+        }
+      }
+    }
+  </script>
 
-MIT License - veja o arquivo `LICENSE` para detalhes.
+  <style>
+    /* Base smoothing */
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+    }
+
+    /* Glass effect */
+    .glass {
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+
+    /* Card hover */
+    .card-hover {
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .card-hover:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 25px 50px -12px rgba(0, 184, 118, 0.25);
+    }
+
+    /* Botões */
+    .btn-primary {
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+    }
+
+    .btn-primary::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 5px;
+      height: 5px;
+      background: rgba(255, 255, 255, 0.5);
+      opacity: 0;
+      border-radius: 100%;
+      transform: scale(1, 1) translate(-50%);
+      transform-origin: 50% 50%;
+    }
+
+    .btn-primary:hover::after {
+      animation: ripple 1s ease-out;
+    }
+
+    @keyframes ripple {
+      0% {
+        transform: scale(0, 0);
+        opacity: 0.5;
+      }
+
+      100% {
+        transform: scale(40, 40);
+        opacity: 0;
+      }
+    }
+
+    /* Animações */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-30px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes floatIcon {
+
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-10px);
+      }
+    }
+
+    .animate-fade-up {
+      animation: fadeInUp 0.8s ease-out forwards;
+    }
+
+    .animate-fade-down {
+      animation: fadeInDown 0.8s ease-out forwards;
+    }
+
+    /* Gradient text */
+    .gradient-text {
+      background: linear-gradient(135deg, #0D6A7E 0%, #00B876 50%, #2A9D8F 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* WhatsApp Float */
+    .whatsapp-float {
+      animation: floatIcon 3s ease-in-out infinite;
+    }
+
+    /* Nav Link Styles */
+    .nav-link {
+      @apply flex items-center gap-2 px-4 py-2 rounded-lg text-gray-700 hover:text-primary hover:bg-gray-50 transition-all duration-200 font-medium;
+    }
+
+    .mobile-nav-link {
+      @apply flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:text-primary hover:bg-gray-50 transition-all duration-200;
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 10px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      border-radius: 10px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(to bottom, #00B876, #2A9D8F);
+      border-radius: 10px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: linear-gradient(to bottom, #00A860, #27897F);
+    }
+
+    /* Stat Animation */
+    .stat-number {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.8s ease-out;
+    }
+
+    .stat-number.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Mobile Menu Animation */
+    .mobile-menu-enter {
+      animation: slideDown 0.3s ease-out;
+    }
+
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+
+  <!-- Schema.org SEO -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FinancialService",
+      "name": "ANIMO Créditos & Investimentos LTDA",
+      "description": "Correspondente Bancário autorizado com mais de 15 anos de experiência em soluções de crédito e investimentos.",
+      "url": "https://www.animocreditos.com.br",
+      "logo": "https://www.animocreditos.com.br/logo.png",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "R. Bernardo Águiar, 352",
+        "addressLocality": "Barra Velha",
+        "addressRegion": "SC",
+        "postalCode": "88390-000",
+        "addressCountry": "BR"
+      },
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+55 11 99471-6517",
+        "contactType": "Customer Service",
+        "availableLanguage": ["Portuguese"]
+      },
+      "openingHours": "Mo-Fr 08:00-18:00",
+      "priceRange": "$$",
+      "areaServed": {
+        "@type": "Country",
+        "name": "Brazil"
+      }
+    }
+  </script>
+</head>
+
+<body class="bg-light text-gray-900 font-sans antialiased">
+
+  <!-- WhatsApp Float -->
+  <a href="https://wa.me/5511994716517?text=Olá!%20Quero%20saber%20mais%20sobre%20crédito" target="_blank"
+    class="fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-[#25D366] to-[#1FAF56] text-white shadow-lg hover:scale-110 transition-all duration-300 whatsapp-float"
+    title="Fale conosco no WhatsApp" aria-label="WhatsApp">
+    <i class="fab fa-whatsapp text-2xl"></i>
+  </a>
+
+  <!-- Header -->
+  <header class="sticky top-0 z-50 glass border-b border-gray-100 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3">
+      <div class="flex items-center justify-between">
+        <!-- Logo -->
+        <!-- Logo Section -->
+        <a href="#" class="flex items-center gap-3 group">
+          <div class="relative">
+            <div
+              class="absolute inset-0 bg-gradient-to-br from-secondary to-blueaccent rounded-full blur-sm opacity-60">
+            </div>
+            <div
+              class="relative h-12 w-12 rounded-full bg-gradient-to-br from-secondary to-blueaccent flex items-center justify-center overflow-hidden shadow-md animate-float">
+              <img
+                src="https://github.com/duhcwb90-debug/Animo/blob/main/logo.jpg?raw=true" alt="ANIMO Logo"
+                alt="ANIMO Créditos & Investimentos - Correspondente Bancário" width="100" height="100" loading="lazy"
+                class="h-10 w-10 object-contain p-0.5"
+                onerror="this.onerror=null; 
+                this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgdmlld0JveD0iMCAwIDEwMCAxMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iNTAiIGN5PSI1MCIgcj0iNDgiIGZpbGw9InVybCgjZ3JhZGllbnQpIi8+PHRleHQgeD0iNTAiIHk9IjU1IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSJ3aGl0ZSIgZm9udC1zaXplPSIyNCIgZm9udC13ZWlnaHQ9ImJvbGQiPkE8L3RleHQ+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkaWVudCIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzAwQjg3NiIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzJBOUQ4RiIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjwvc3ZnPg==';">
+            </div>
+          </div>
+          <div>
+            <h1 class="text-xl sm:text-2xl font-display font-bold gradient-text">ANIMO</h1>
+            <p class="text-xs font-semibold text-secondary tracking-wider uppercase">Créditos & Investimentos</p>
+          </div>
+        </a>
+
+        <!-- Desktop Navigation -->
+        <nav class="hidden lg:flex items-center gap-6">
+          <a href="#services" class="nav-link">
+            <i class="fas fa-hand-holding-usd text-sm"></i>
+            <span>Serviços</span>
+          </a>
+          <a href="#certifications" class="nav-link">
+            <i class="fas fa-certificate text-sm"></i>
+            <span>Certificações</span>
+          </a>
+          <a href="#about" class="nav-link">
+            <i class="fas fa-building text-sm"></i>
+            <span>Sobre Nós</span>
+          </a>
+          <a href="#contact" class="nav-link">
+            <i class="fas fa-phone-alt text-sm"></i>
+            <span>Contato</span>
+          </a>
+        </nav>
+
+        <!-- CTA Desktop -->
+        <div class="hidden lg:flex items-center gap-4">
+          <a href="tel:+5511994716517" class="text-sm text-gray-600 hover:text-primary transition-colors font-medium">
+            <i class="fas fa-phone mr-1"></i>
+            (11) 99471-6517
+          </a>
+          <a href="https://wa.me/5511994716517" target="_blank"
+            class="px-5 py-2.5 bg-gradient-to-r from-secondary to-blueaccent text-white font-semibold rounded-full shadow-md hover:shadow-lg transition-all duration-300 btn-primary">
+            <i class="fab fa-whatsapp mr-2"></i>
+            Simular Agora
+          </a>
+        </div>
+
+        <!-- Mobile Menu Button -->
+        <button id="mobileMenuBtn"
+          class="lg:hidden text-2xl text-gray-700 p-2 hover:bg-gray-100 rounded-lg transition-colors" aria-label="Menu"
+          aria-expanded="false">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+
+      <!-- Mobile Menu -->
+      <div id="mobileMenu" class="lg:hidden hidden mt-4 pt-4 border-t border-gray-100 mobile-menu-enter">
+        <div class="space-y-3">
+          <a href="#services" class="mobile-nav-link">
+            <i class="fas fa-hand-holding-usd text-secondary w-5"></i>
+            Serviços
+          </a>
+          <a href="#certifications" class="mobile-nav-link">
+            <i class="fas fa-certificate text-secondary w-5"></i>
+            Certificações
+          </a>
+          <a href="#about" class="mobile-nav-link">
+            <i class="fas fa-building text-secondary w-5"></i>
+            Sobre Nós
+          </a>
+          <a href="#contact" class="mobile-nav-link">
+            <i class="fas fa-phone-alt text-secondary w-5"></i>
+            Contato
+          </a>
+
+          <div class="pt-4 border-t border-gray-200 space-y-3">
+            <a href="tel:+5511994716517"
+              class="flex items-center justify-center gap-2 px-4 py-3 bg-gray-50 rounded-lg text-primary font-semibold hover:bg-gray-100 transition-colors">
+              <i class="fas fa-phone"></i>
+              Ligar: (11) 99471-6517
+            </a>
+            <a href="https://wa.me/5511994716517" target="_blank"
+              class="flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-secondary to-blueaccent text-white font-semibold rounded-lg shadow-md hover:shadow-lg transition-all duration-300">
+              <i class="fab fa-whatsapp"></i>
+              WhatsApp Rápido
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="relative pt-16 pb-24 md:pt-24 md:pb-32 overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-br from-light via-blue-50/30 to-green-50/30"></div>
+
+    <!-- Elementos decorativos -->
+    <div class="hidden lg:block absolute top-20 right-10 w-80 h-80 bg-secondary/5 rounded-full blur-3xl animate-pulse">
+    </div>
+    <div class="hidden lg:block absolute bottom-0 left-20 w-64 h-64 bg-primary/5 rounded-full blur-3xl"
+      style="animation: floatIcon 4s ease-in-out infinite;"></div>
+
+    <div class="relative max-w-6xl mx-auto px-4 sm:px-6 text-center z-10">
+      <h1
+        class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-4 sm:mb-6 leading-tight text-gray-900 animate-fade-down">
+        Crédito Consciente para<br>
+        <span class="gradient-text">Conquistar Seus Sonhos</span>
+      </h1>
+
+      <p class="text-base sm:text-lg md:text-xl text-gray-600 max-w-2xl mx-auto mb-6 sm:mb-8 animate-fade-up"
+        style="animation-delay: 0.2s;">
+        Correspondente Bancário autorizado • Parcerias com os principais bancos do Brasil
+      </p>
+
+      <div class="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center animate-fade-up"
+        style="animation-delay: 0.4s;">
+        <a href="#services"
+          class="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-secondary to-blueaccent text-white font-bold text-sm sm:text-base rounded-full shadow-md hover:shadow-lg hover:scale-105 transition-all duration-300 btn-primary">
+          Explorar Soluções
+        </a>
+        <a href="#contact"
+          class="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 border-2 border-primary text-primary font-bold text-sm sm:text-base rounded-full hover:bg-primary hover:text-white transition-all duration-300">
+          Falar Agora
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Serviços -->
+  <section id="services" class="py-16 sm:py-20 md:py-24 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="text-center mb-12 sm:mb-16">
+        <h2 class="text-2xl sm:text-3xl md:text-4xl font-display font-bold text-gray-900 mb-3 sm:mb-4">Nossas Soluções
+          Financeiras</h2>
+        <p class="text-sm sm:text-base md:text-lg text-gray-600 max-w-2xl mx-auto">Produtos financeiros através de
+          nossos principais bancos parceiros</p>
+        <div class="w-16 h-1 bg-gradient-to-r from-secondary to-blueaccent rounded-full mx-auto mt-4"></div>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+        <!-- Empréstimo Pessoal -->
+        <div class="card-hover bg-white rounded-2xl shadow-smooth border border-gray-100 overflow-hidden">
+          <div class="h-2 bg-gradient-to-r from-secondary to-blueaccent"></div>
+          <div class="p-5 sm:p-6">
+            <div
+              class="inline-flex h-12 w-12 sm:h-14 sm:w-14 items-center justify-center rounded-xl bg-secondary/10 text-secondary text-2xl sm:text-3xl mb-4">
+              <i class="fas fa-hand-holding-usd"></i>
+            </div>
+            <h3 class="text-lg sm:text-xl font-bold text-gray-900 mb-2">Empréstimo Pessoal</h3>
+            <p class="text-sm text-gray-600 mb-4">Crédito rápido e descomplicado para seus objetivos pessoais.</p>
+            <ul class="space-y-2 text-sm">
+              <li class="flex items-center gap-2 text-gray-700"><i
+                  class="fas fa-check-circle text-secondary text-sm"></i> Sem garantias</li>
+              <li class="flex items-center gap-2 text-gray-700"><i
+                  class="fas fa-check-circle text-secondary text-sm"></i> Liberação em 48h</li>
+              <li class="flex items-center gap-2 text-gray-700"><i
+                  class="fas fa-check-circle text-secondary text-sm"></i> R$1.000 a R$100.000</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Crédito Consignado -->
+        <div class="card-hover bg-white rounded-2xl shadow-smooth border border-gray-100 overflow-hidden">
+          <div class="h-2 bg-gradient-to-r from-secondary to-blueaccent"></div>
+          <div class="p-5 sm:p-6">
+            <div
+              class="inline-flex h-12 w-12 sm:h-14 sm:w-14 items-center justify-center rounded-xl bg-secondary/10 text-secondary text-2xl sm:text-3xl mb-4">
+              <i class="fas fa-file-invoice-dollar"></i>
+            </div>
+            <h3 class="text-lg sm:text-xl font-bold text-gray-900 mb-2">Crédito Consignado</h3>
+            <p class="text-sm text-gray-600 mb-4">Menores taxas para aposentados, pensionistas e servidores públicos.
+            </p>
+            <ul class="space-y-2 text-sm">
+              <li class="flex items-center gap-2 text-gray-700"><i
+                  class="fas fa-check-circle text-secondary text-sm"></i> Taxas reduzidas</li>
+              <li class="flex items-center gap-2 text-gray-700"><i
+                  class="fas fa-check-circle text-secondary text-sm"></i> Desconto em folha</li>
+              <li class="flex items-center gap-2 text-gray-700"><i
+                  class="fas fa-check-circle text-secondary text-sm"></i> Até 84 meses</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Financiamento Imobiliário -->
+        <div class="card-hover bg-white rounded-2xl shadow-smooth border border-gray-100 overflow-hidden">
+          <div class="h-2 bg-gradient-to-r from-secondary to-blueaccent"></div>
+          <div class="p-5 sm:p-6">
+            <div
+              class="inline-flex h-12 w-12 sm:h-14 sm:w-14 items-center justify-center rounded-xl bg-secondary/10 text-secondary text-2xl sm:text-3xl mb-4">
+              <i class="fas fa-home"></i>
+            </div>
+            <h3 class="text-lg sm:text-xl font-bold text-gray-900 mb-2">Financiamento Imobiliário</h3>
+            <p class="text-sm text-gray-600 mb-4">Casa própria com as melhores condições e subsídios disponíveis.</p>
+            <ul class="space-y-2 text-sm">
+              <li class="flex items-center gap-2 text-gray-700"><i
+                  class="fas fa-check-circle text-secondary text-sm"></i> SFH/SFI</li>
+              <li class="flex items-center gap-2 text-gray-700"><i
+                  class="fas fa-check-circle text-secondary text-sm"></i> Uso FGTS</li>
+              <li class="flex items-center gap-2 text-gray-700"><i
+                  class="fas fa-check-circle text-secondary text-sm"></i> Subsídios</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Financiamento Veicular -->
+        <div class="card-hover bg-white rounded-2xl shadow-smooth border border-gray-100 overflow-hidden">
+          <div class="h-2 bg-gradient-to-r from-secondary to-blueaccent"></div>
+          <div class="p-5 sm:p-6">
+            <div
+              class="inline-flex h-12 w-12 sm:h-14 sm:w-14 items-center justify-center rounded-xl bg-secondary/10 text-secondary text-2xl sm:text-3xl mb-4">
+              <i class="fas fa-car"></i>
+            </div>
+            <h3 class="text-lg sm:text-xl font-bold text-gray-900 mb-2">Financiamento Veicular</h3>
+            <p class="text-sm text-gray-600 mb-4">Carros, motos novos ou usados com aprovação rápida e seguro incluso.
+            </p>
+            <ul class="space-y-2 text-sm">
+              <li class="flex items-center gap-2 text-gray-700"><i
+                  class="fas fa-check-circle text-secondary text-sm"></i> Novo/Seminovo/Usado</li>
+              <li class="flex items-center gap-2 text-gray-700"><i
+                  class="fas fa-check-circle text-secondary text-sm"></i> Entrada facilitada</li>
+              <li class="flex items-center gap-2 text-gray-700"><i
+                  class="fas fa-check-circle text-secondary text-sm"></i> Seguro incluso</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Antecipação FGTS -->
+        <div class="card-hover bg-white rounded-2xl shadow-smooth border border-gray-100 overflow-hidden">
+          <div class="h-2 bg-gradient-to-r from-secondary to-blueaccent"></div>
+          <div class="p-5 sm:p-6">
+            <div
+              class="inline-flex h-12 w-12 sm:h-14 sm:w-14 items-center justify-center rounded-xl bg-secondary/10 text-secondary text-2xl sm:text-3xl mb-4">
+              <i class="fas fa-piggy-bank"></i>
+            </div>
+            <h3 class="text-lg sm:text-xl font-bold text-gray-900 mb-2">Antecipação FGTS</h3>
+            <p class="text-sm text-gray-600 mb-4">Antecipe suas parcelas do FGTS com segurança e 100% digital.</p>
+            <ul class="space-y-2 text-sm">
+              <li class="flex items-center gap-2 text-gray-700"><i
+                  class="fas fa-check-circle text-secondary text-sm"></i> Saque-aniversário</li>
+              <li class="flex items-center gap-2 text-gray-700"><i
+                  class="fas fa-check-circle text-secondary text-sm"></i> 100% digital</li>
+              <li class="flex items-center gap-2 text-gray-700"><i
+                  class="fas fa-check-circle text-secondary text-sm"></i> Sem análise crédito</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Crédito PJ -->
+        <div class="card-hover bg-white rounded-2xl shadow-smooth border border-gray-100 overflow-hidden">
+          <div class="h-2 bg-gradient-to-r from-secondary to-blueaccent"></div>
+          <div class="p-5 sm:p-6">
+            <div
+              class="inline-flex h-12 w-12 sm:h-14 sm:w-14 items-center justify-center rounded-xl bg-secondary/10 text-secondary text-2xl sm:text-3xl mb-4">
+              <i class="fas fa-building"></i>
+            </div>
+            <h3 class="text-lg sm:text-xl font-bold text-gray-900 mb-2">Crédito PJ</h3>
+            <p class="text-sm text-gray-600 mb-4">Capital para seu negócio crescer com taxas especiais para MEI/ME.</p>
+            <ul class="space-y-2 text-sm">
+              <li class="flex items-center gap-2 text-gray-700"><i
+                  class="fas fa-check-circle text-secondary text-sm"></i> Capital de giro</li>
+              <li class="flex items-center gap-2 text-gray-700"><i
+                  class="fas fa-check-circle text-secondary text-sm"></i> Equipamentos</li>
+              <li class="flex items-center gap-2 text-gray-700"><i
+                  class="fas fa-check-circle text-secondary text-sm"></i> Antecipações</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Certificações -->
+  <section id="certifications" class="py-16 sm:py-20 md:py-24 bg-gradient-to-b from-gray-50 to-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="text-center mb-12 sm:mb-16">
+        <h2 class="text-2xl sm:text-3xl md:text-4xl font-display font-bold text-gray-900 mb-3 sm:mb-4">Certificações e
+          Conformidades</h2>
+        <p class="text-sm sm:text-base md:text-lg text-gray-600 max-w-2xl mx-auto">Qualificações obrigatórias para
+          excelência e segurança</p>
+        <div class="w-16 h-1 bg-gradient-to-r from-secondary to-blueaccent rounded-full mx-auto mt-4"></div>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+        <!-- FEBRABAN 100 -->
+        <div class="card-hover bg-white rounded-2xl shadow-smooth p-5 sm:p-6 text-center border border-gray-100">
+          <div
+            class="mx-auto mb-4 h-12 w-12 sm:h-16 sm:w-16 flex items-center justify-center rounded-xl bg-secondary/10 text-secondary text-2xl sm:text-3xl">
+            <i class="fas fa-shield-alt"></i>
+          </div>
+          <h3 class="text-base sm:text-lg font-bold text-gray-900 mb-2">FEBRABAN 100</h3>
+          <p class="text-xs sm:text-sm text-gray-600 leading-relaxed">Conformidade com práticas bancárias da Federação
+            Brasileira de Bancos</p>
+        </div>
+
+        <!-- CPA-10 & 20 -->
+        <div class="card-hover bg-white rounded-2xl shadow-smooth p-5 sm:p-6 text-center border border-gray-100">
+          <div
+            class="mx-auto mb-4 h-12 w-12 sm:h-16 sm:w-16 flex items-center justify-center rounded-xl bg-primary/10 text-primary text-2xl sm:text-3xl">
+            <i class="fas fa-chart-line"></i>
+          </div>
+          <h3 class="text-base sm:text-lg font-bold text-gray-900 mb-2">CPA-10 & 20</h3>
+          <p class="text-xs sm:text-sm text-gray-600 leading-relaxed">Certificação Profissional ANBIMA para mercado de
+            capitais</p>
+        </div>
+
+        <!-- PLDFT -->
+        <div class="card-hover bg-white rounded-2xl shadow-smooth p-5 sm:p-6 text-center border border-gray-100">
+          <div
+            class="mx-auto mb-4 h-12 w-12 sm:h-16 sm:w-16 flex items-center justify-center rounded-xl bg-blueaccent/10 text-blueaccent text-2xl sm:text-3xl">
+            <i class="fas fa-user-shield"></i>
+          </div>
+          <h3 class="text-base sm:text-lg font-bold text-gray-900 mb-2">PLDFT</h3>
+          <p class="text-xs sm:text-sm text-gray-600 leading-relaxed">Prevenção à Lavagem de Dinheiro e Financiamento ao
+            Terrorismo</p>
+        </div>
+
+        <!-- LGPD -->
+        <div class="card-hover bg-white rounded-2xl shadow-smooth p-5 sm:p-6 text-center border border-gray-100">
+          <div
+            class="mx-auto mb-4 h-12 w-12 sm:h-16 sm:w-16 flex items-center justify-center rounded-xl bg-accent/10 text-accent text-2xl sm:text-3xl">
+            <i class="fas fa-database"></i>
+          </div>
+          <h3 class="text-base sm:text-lg font-bold text-gray-900 mb-2">LGPD</h3>
+          <p class="text-xs sm:text-sm text-gray-600 leading-relaxed">Proteção de Dados Pessoais conforme Lei Geral de
+            Proteção de Dados</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sobre Nós -->
+  <section id="about" class="py-16 sm:py-20 md:py-24 bg-white relative overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-br from-secondary/5 via-transparent to-primary/5 pointer-events-none">
+    </div>
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="text-center mb-12 sm:mb-16">
+        <h2 class="text-2xl sm:text-3xl md:text-4xl font-display font-bold text-gray-900 mb-3 sm:mb-4">Sobre a ANIMO
+        </h2>
+        <p class="text-sm sm:text-base md:text-lg text-gray-600 max-w-2xl mx-auto">Mais de 15 anos transformando sonhos
+          em realidade com crédito responsável</p>
+        <div class="w-16 h-1 bg-gradient-to-r from-secondary to-blueaccent rounded-full mx-auto mt-4"></div>
+      </div>
+
+      <div class="grid lg:grid-cols-2 gap-8 sm:gap-12 items-center">
+        <div>
+          <p class="text-sm sm:text-base text-gray-700 mb-4 sm:mb-6 leading-relaxed">
+            <strong class="text-lg sm:text-xl gradient-text">ANIMO CRÉDITOS & INVESTIMENTOS LTDA</strong><br>
+            <span class="text-xs sm:text-sm text-gray-600">CNPJ: 60.687.378/0001-37</span><br><br>
+            Há mais de 15 anos no mercado como Correspondente Bancário autorizado, a ANIMO se destaca por oferecer
+            soluções financeiras personalizadas em parceria com os principais bancos do Brasil. Nossa missão é
+            proporcionar acesso ao crédito com transparência, agilidade e as melhores condições de mercado.
+          </p>
+          <p class="text-sm sm:text-base text-gray-700 mb-6 sm:mb-8">
+            <strong>Localização:</strong><br>
+            R. Bernardo Águiar, 352 - Centro<br>
+            Barra Velha - SC, 88390-000
+          </p>
+
+          <div class="grid grid-cols-3 gap-3 sm:gap-4" id="stats">
+            <div
+              class="text-center p-3 sm:p-4 rounded-xl bg-gradient-to-br from-secondary/5 to-blueaccent/5 border border-secondary/20">
+              <div
+                class="stat-number text-2xl sm:text-3xl md:text-4xl font-display font-bold gradient-text mb-1 sm:mb-2">
+                15+</div>
+              <p class="text-xs sm:text-sm text-gray-600 font-semibold">Anos de Experiência</p>
+            </div>
+            <div
+              class="text-center p-3 sm:p-4 rounded-xl bg-gradient-to-br from-secondary/5 to-blueaccent/5 border border-secondary/20">
+              <div
+                class="stat-number text-2xl sm:text-3xl md:text-4xl font-display font-bold gradient-text mb-1 sm:mb-2">
+                10K+</div>
+              <p class="text-xs sm:text-sm text-gray-600 font-semibold">Clientes Atendidos</p>
+            </div>
+            <div
+              class="text-center p-3 sm:p-4 rounded-xl bg-gradient-to-br from-secondary/5 to-blueaccent/5 border border-secondary/20">
+              <div
+                class="stat-number text-2xl sm:text-3xl md:text-4xl font-display font-bold gradient-text mb-1 sm:mb-2">
+                R$1Bi+</div>
+              <p class="text-xs sm:text-sm text-gray-600 font-semibold">Em Crédito</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex flex-col items-center gap-6">
+          <h3 class="text-xl sm:text-2xl font-display font-bold text-gray-900">Nossa Equipe</h3>
+          <div class="grid grid-cols-2 gap-4 w-full">
+            <div class="rounded-2xl overflow-hidden shadow-md border-2 border-white hover:shadow-lg transition-all">
+              <div
+                class="w-full h-48 sm:h-56 bg-gradient-to-br from-secondary/20 to-blueaccent/20 flex items-center justify-center text-gray-400">
+                <i class="fas fa-user-circle text-6xl sm:text-7xl"></i>
+              </div>
+            </div>
+            <div class="rounded-2xl overflow-hidden shadow-md border-2 border-white hover:shadow-lg transition-all">
+              <div
+                class="w-full h-48 sm:h-56 bg-gradient-to-br from-secondary/20 to-blueaccent/20 flex items-center justify-center text-gray-400">
+                <i class="fas fa-user-circle text-6xl sm:text-7xl"></i>
+              </div>
+            </div>
+          </div>
+          <p class="text-center text-sm text-gray-600 italic">Andrea & Bárbara - Consultoras Especializadas</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contato -->
+  <section id="contact" class="py-16 sm:py-20 md:py-24 bg-gradient-to-b from-gray-50 to-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="text-center mb-12 sm:mb-16">
+        <h2 class="text-2xl sm:text-3xl md:text-4xl font-display font-bold text-gray-900 mb-3 sm:mb-4">Fale Conosco</h2>
+        <p class="text-sm sm:text-base md:text-lg text-gray-600 max-w-2xl mx-auto">Canais rápidos e diretos para suas
+          dúvidas ou propostas</p>
+        <div class="w-16 h-1 bg-gradient-to-r from-secondary to-blueaccent rounded-full mx-auto mt-4"></div>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+        <!-- WhatsApp -->
+        <div class="card-hover bg-white rounded-2xl shadow-smooth p-5 sm:p-6 text-center border border-gray-100">
+          <div
+            class="mx-auto mb-4 h-12 w-12 sm:h-14 sm:w-14 flex items-center justify-center rounded-full bg-[#25D366]/10 text-[#25D366] text-2xl sm:text-3xl">
+            <i class="fab fa-whatsapp"></i>
+          </div>
+          <h3 class="text-base sm:text-lg font-bold text-gray-900 mb-2">WhatsApp</h3>
+          <p class="text-xs sm:text-sm text-gray-600 mb-4">Atendimento imediato em até 5 minutos</p>
+          <a href="https://wa.me/5511994716517" target="_blank"
+            class="inline-flex px-4 sm:px-5 py-2.5 bg-[#25D366] text-white font-semibold rounded-full hover:bg-[#25D366]/90 transition-all duration-300 shadow-sm hover:shadow-md btn-primary text-sm">
+            Enviar Mensagem
+          </a>
+        </div>
+
+        <!-- Telefone -->
+        <div class="card-hover bg-white rounded-2xl shadow-smooth p-5 sm:p-6 text-center border border-gray-100">
+          <div
+            class="mx-auto mb-4 h-12 w-12 sm:h-14 sm:w-14 flex items-center justify-center rounded-full bg-primary/10 text-primary text-2xl sm:text-3xl">
+            <i class="fas fa-phone-alt"></i>
+          </div>
+          <h3 class="text-base sm:text-lg font-bold text-gray-900 mb-2">Telefone</h3>
+          <p class="text-xs sm:text-sm text-gray-600 mb-4">Fale diretamente com um consultor</p>
+          <a href="tel:+5511994716517"
+            class="inline-flex px-4 sm:px-5 py-2.5 bg-primary text-white font-semibold rounded-full hover:bg-primary/90 transition-all duration-300 shadow-sm hover:shadow-md btn-primary text-sm">
+            Ligar Agora
+          </a>
+        </div>
+
+        <!-- E-mail -->
+        <div class="card-hover bg-white rounded-2xl shadow-smooth p-5 sm:p-6 text-center border border-gray-100">
+          <div
+            class="mx-auto mb-4 h-12 w-12 sm:h-14 sm:w-14 flex items-center justify-center rounded-full bg-blueaccent/10 text-blueaccent text-2xl sm:text-3xl">
+            <i class="fas fa-envelope"></i>
+          </div>
+          <h3 class="text-base sm:text-lg font-bold text-gray-900 mb-2">E-mail</h3>
+          <p class="text-xs sm:text-sm text-gray-600 mb-4">Envie dúvidas ou documentos</p>
+          <a href="mailto:contato@animocreditos.com.br"
+            class="inline-flex px-4 sm:px-5 py-2.5 bg-blueaccent text-white font-semibold rounded-full hover:bg-blueaccent/90 transition-all duration-300 shadow-sm hover:shadow-md btn-primary text-sm">
+            Enviar E-mail
+          </a>
+        </div>
+
+        <!-- Reclamações -->
+        <div class="card-hover bg-white rounded-2xl shadow-smooth p-5 sm:p-6 text-center border border-gray-100">
+          <div
+            class="mx-auto mb-4 h-12 w-12 sm:h-14 sm:w-14 flex items-center justify-center rounded-full bg-accent/10 text-accent text-2xl sm:text-3xl">
+            <i class="fas fa-comments"></i>
+          </div>
+          <h3 class="text-base sm:text-lg font-bold text-gray-900 mb-2">Reclamações</h3>
+          <p class="text-xs sm:text-sm text-gray-600 mb-4">Canais oficiais para resoluções</p>
+          <a href="https://www.bcb.gov.br/contato/reclame" target="_blank"
+            class="inline-flex px-4 sm:px-5 py-2.5 bg-accent text-white font-semibold rounded-full hover:bg-accent/90 transition-all duration-300 shadow-sm hover:shadow-md btn-primary text-sm">
+            Banco Central
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Final -->
+  <section
+    class="py-12 sm:py-16 md:py-20 bg-gradient-to-r from-primary via-blueaccent to-secondary text-white text-center relative overflow-hidden">
+    <div class="absolute inset-0 opacity-10">
+      <div class="hidden sm:block absolute top-10 right-10 w-32 h-32 bg-white rounded-full blur-3xl"></div>
+      <div class="hidden sm:block absolute bottom-10 left-10 w-32 h-32 bg-white rounded-full blur-3xl"></div>
+    </div>
+    <div class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6">
+      <h2 class="text-xl sm:text-2xl md:text-3xl font-display font-bold mb-4 sm:mb-6">Pronto para Transformar Seus
+        Planos?</h2>
+      <p class="text-sm sm:text-base md:text-lg max-w-2xl mx-auto mb-6 sm:mb-8 opacity-95">
+        Descubra as melhores opções de crédito com consultores especializados. Segurança e transparência garantidas.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
+        <a href="https://wa.me/5511994716517" target="_blank"
+          class="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 bg-white text-primary font-bold text-sm sm:text-base rounded-full shadow-md hover:shadow-lg hover:scale-105 transition-all duration-300 btn-primary">
+          Simular pelo WhatsApp
+        </a>
+        <a href="#contact"
+          class="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 border-2 border-white text-white font-bold text-sm sm:text-base rounded-full hover:bg-white hover:text-primary transition-all duration-300">
+          Outros Contatos
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-dark text-gray-300 py-12 sm:py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="grid md:grid-cols-4 gap-8 sm:gap-12 mb-12">
+        <div>
+          <h3 class="text-xl sm:text-2xl font-display font-bold text-white mb-3 sm:mb-4 gradient-text">ANIMO</h3>
+          <p class="text-xs sm:text-sm mb-4 leading-relaxed">
+            Correspondente Bancário autorizado com 15+ anos de excelência em soluções financeiras.
+          </p>
+          <p class="text-xs text-gray-500">CNPJ: 60.687.378/0001-37</p>
+        </div>
+
+        <div>
+          <h4 class="text-base sm:text-lg font-bold text-white mb-4">Serviços</h4>
+          <ul class="space-y-2 text-xs sm:text-sm">
+            <li><a href="#services" class="hover:text-secondary transition-colors">Empréstimo Pessoal</a></li>
+            <li><a href="#services" class="hover:text-secondary transition-colors">Crédito Consignado</a></li>
+            <li><a href="#services" class="hover:text-secondary transition-colors">Financiamento Imobiliário</a></li>
+            <li><a href="#services" class="hover:text-secondary transition-colors">Antecipação FGTS</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="text-base sm:text-lg font-bold text-white mb-4">Links</h4>
+          <ul class="space-y-2 text-xs sm:text-sm">
+            <li><a href="#certifications" class="hover:text-secondary transition-colors">Certificações</a></li>
+            <li><a href="#about" class="hover:text-secondary transition-colors">Sobre Nós</a></li>
+            <li><a href="#contact" class="hover:text-secondary transition-colors">Contato</a></li>
+            <li><a href="#services" class="hover:text-secondary transition-colors">Serviços</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="text-base sm:text-lg font-bold text-white mb-4">Contato</h4>
+          <ul class="space-y-2 text-xs sm:text-sm">
+            <li class="flex items-center gap-2"><i class="fas fa-phone-alt text-secondary"></i> Bárbara (11) 94716-517
+            </li>
+            <li class="flex items-center gap-2"><i class="fas fa-phone-alt text-secondary"></i> Andrea (41) 99859-2819
+            </li>
+            <li class="flex items-center gap-2"><i class="fas fa-envelope text-secondary"></i>
+              contato@animocreditos.com.br</li>
+            <li class="flex items-center gap-2"><i class="fas fa-map-marker-alt text-secondary"></i> Barra Velha - SC
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="border-t border-gray-700 pt-6 sm:pt-8 text-center text-xs sm:text-sm text-gray-500">
+        <p>&copy; 2024 ANIMO Créditos & Investimentos. Todos os direitos reservados.</p>
+        <p class="mt-2 sm:mt-3">
+          Desenvolvido com <i class="fas fa-heart text-secondary"></i> para o seu sucesso financeiro
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JavaScript -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      // Menu Mobile
+      const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+      const mobileMenu = document.getElementById('mobileMenu');
+      const mobileMenuIcon = mobileMenuBtn?.querySelector('i');
+
+      if (mobileMenuBtn && mobileMenu) {
+        mobileMenuBtn.addEventListener('click', function () {
+          const isExpanded = mobileMenuBtn.getAttribute('aria-expanded') === 'true';
+
+          // Toggle menu visibility
+          mobileMenu.classList.toggle('hidden');
+          mobileMenuBtn.setAttribute('aria-expanded', !isExpanded);
+
+          // Toggle icon
+          if (mobileMenuIcon) {
+            mobileMenuIcon.classList.toggle('fa-bars');
+            mobileMenuIcon.classList.toggle('fa-times');
+          }
+        });
+
+        // Fechar menu ao clicar em link
+        mobileMenu.querySelectorAll('a').forEach(link => {
+          link.addEventListener('click', () => {
+            mobileMenu.classList.add('hidden');
+            mobileMenuBtn.setAttribute('aria-expanded', 'false');
+            if (mobileMenuIcon) {
+              mobileMenuIcon.classList.remove('fa-times');
+              mobileMenuIcon.classList.add('fa-bars');
+            }
+          });
+        });
+      }
+
+      // Animação dos Stats
+      const statsSection = document.getElementById('stats');
+      const statNumbers = document.querySelectorAll('.stat-number');
+
+      if (statsSection && statNumbers.length > 0) {
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              statNumbers.forEach((num, index) => {
+                setTimeout(() => {
+                  num.classList.add('visible');
+                }, index * 300);
+              });
+              observer.disconnect();
+            }
+          });
+        }, {
+          threshold: 0.5,
+          rootMargin: '0px 0px -50px 0px'
+        });
+
+        observer.observe(statsSection);
+      }
+
+      // Rolagem suave para âncoras
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+          const href = this.getAttribute('href');
+
+          if (href === '#' || href === '') return;
+
+          const targetElement = document.querySelector(href);
+          if (targetElement) {
+            e.preventDefault();
+
+            // Fechar menu mobile se aberto
+            if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
+              mobileMenu.classList.add('hidden');
+              mobileMenuBtn.setAttribute('aria-expanded', 'false');
+              if (mobileMenuIcon) {
+                mobileMenuIcon.classList.remove('fa-times');
+                mobileMenuIcon.classList.add('fa-bars');
+              }
+            }
+
+            window.scrollTo({
+              top: targetElement.offsetTop - 80,
+              behavior: 'smooth'
+            });
+          }
+        });
+      });
+
+      // Efeito de scroll no header
+      const header = document.querySelector('header');
+      window.addEventListener('scroll', function () {
+        if (window.scrollY > 50) {
+          header.classList.add('shadow-lg');
+          header.classList.remove('shadow-sm');
+        } else {
+          header.classList.remove('shadow-lg');
+          header.classList.add('shadow-sm');
+        }
+      });
+    });
+  </script>
+  <div
+    class="bg-gradient-to-r from-primary via-blueaccent to-secondary text-white py-2 text-center text-xs sm:text-sm font-medium">
+    ⚠️ Somos Correspondente Bancário - Atuamos em nome de instituições autorizadas pelo Banco Central do Brasil
+  </div>
+</body>
+
+</html>
+
