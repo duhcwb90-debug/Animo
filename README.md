@@ -296,13 +296,12 @@
               class="absolute inset-0 bg-gradient-to-br from-secondary to-blueaccent rounded-full blur-sm opacity-60">
             </div>
             <div
-              class="relative h-12 w-12 rounded-full bg-gradient-to-br from-secondary to-blueaccent flex items-center justify-center overflow-hidden shadow-md animate-float">
-              <img
-                src="https://github.com/duhcwb90-debug/Animo/blob/main/logo.jpg?raw=true" alt="ANIMO Logo"
+              class="relative h-14 w-14 rounded-full bg-gradient-to-br from-secondary to-blueaccent flex items-center justify-center overflow-hidden shadow-md animate-float">
+              <img src="https://github.com/duhcwb90-debug/Animo/blob/main/logo.jpg?raw=true"
                 alt="ANIMO Créditos & Investimentos - Correspondente Bancário" width="100" height="100" loading="lazy"
-                class="h-10 w-10 object-contain p-0.5"
+                style="border-radius: 50%;" class="h-14 w-14 object-contain p-0.5"
                 onerror="this.onerror=null; 
-                this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgdmlld0JveD0iMCAwIDEwMCAxMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iNTAiIGN5PSI1MCIgcj0iNDgiIGZpbGw9InVybCgjZ3JhZGllbnQpIi8+PHRleHQgeD0iNTAiIHk9IjU1IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSJ3aGl0ZSIgZm9udC1zaXplPSIyNCIgZm9udC13ZWlnaHQ9ImJvbGQiPkE8L3RleHQ+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkaWVudCIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzAwQjg3NiIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzJBOUQ4RiIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjwvc3ZnPg==';">
+    this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgdmlld0JveD0iMCAwIDEwMCAxMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iNTAiIGN5PSI1MCIgcj0iNDgiIGZpbGw9InVybCgjZ3JhZGllbnQpIi8+PHRleHQgeD0iNTAiIHk9IjU1IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSJ3aGl0ZSIgZm9udC1zaXplPSIyNCIgZm9udC13ZWlnaHQ9ImJvbGQiPkE8L3RleHQ+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkaWVudCIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzAwQjg3NiIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzJBOUQ4RiIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjwvc3ZnPg==';">
             </div>
           </div>
           <div>
@@ -963,4 +962,3 @@
 </body>
 
 </html>
-
