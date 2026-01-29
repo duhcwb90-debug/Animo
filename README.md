@@ -26,4 +26,4 @@ Acesse o site live: [animocreditos.com.br](https://animocreditos.com.br)
 ## 📄 Licença
 MIT License - veja [LICENSE](LICENSE) para detalhes.
 
-Desenvolvido por [Seu Nome] - São Bento do Sul, SC.
+Desenvolvido por [Luiz Eduardo Leal Trindade] - Barra Velha, SC.
