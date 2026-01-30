@@ -186,7 +186,34 @@
 
     /* Nav Link Styles */
     .nav-link {
-      @apply flex items-center gap-2 px-4 py-2 rounded-lg text-gray-700 hover:text-primary hover:bg-gray-50 transition-all duration-200 font-medium;
+      @apply flex items-center gap-2 px-4 py-2 rounded-lg text-gray-700 hover:text-primary hover:bg-gray-50 transition-all duration-200 font-medium relative overflow-hidden;
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(to right, #00B876, #2A9D8F);
+      transition: all 0.3s ease;
+      transform: translateX(-50%);
+    }
+
+    .nav-link:hover::after,
+    .nav-link.active::after {
+      width: 80%;
+    }
+
+    .nav-link.active,
+    .mobile-nav-link.active {
+      @apply text-primary font-semibold bg-primary/5;
+    }
+
+    .nav-link.active i,
+    .mobile-nav-link.active i {
+      @apply text-secondary;
     }
 
     .mobile-nav-link {
@@ -224,20 +251,77 @@
       transform: translateY(0);
     }
 
-    /* Mobile Menu Animation */
-    .mobile-menu-enter {
-      animation: slideDown 0.3s ease-out;
-    }
-
-    @keyframes slideDown {
+    /* Animações de entrada do menu mobile */
+    @keyframes slideInDown {
       from {
         opacity: 0;
-        transform: translateY(-20px);
+        transform: translateY(-10px) scale(0.95);
       }
 
       to {
         opacity: 1;
-        transform: translateY(0);
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .mobile-menu-enter {
+      animation: slideInDown 0.3s ease-out forwards;
+    }
+
+    /* Efeito de focus para acessibilidade */
+    .nav-link:focus,
+    .mobile-nav-link:focus {
+      @apply outline-none ring-2 ring-secondary/50 ring-offset-2;
+    }
+
+    /* Transições suaves para todos os links */
+    a {
+      transition: all 0.2s ease;
+    }
+
+    /* Loading state para botões */
+    .btn-primary.loading {
+      position: relative;
+      color: transparent;
+    }
+
+    .btn-primary.loading::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 20px;
+      height: 20px;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-top-color: white;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      transform: translate(-50%, -50%);
+    }
+
+    @keyframes spin {
+      to {
+        transform: translate(-50%, -50%) rotate(360deg);
+      }
+    }
+
+    /* Backdrop para menu mobile */
+    .mobile-menu-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(4px);
+      z-index: 40;
+      animation: fadeIn 0.3s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
       }
     }
   </style>
@@ -285,11 +369,10 @@
   </a>
 
   <!-- Header -->
-  <header class="sticky top-0 z-50 glass border-b border-gray-100 shadow-sm">
+  <header class="sticky top-0 z-50 glass border-b border-gray-100 shadow-sm transition-all duration-300">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3">
       <div class="flex items-center justify-between">
         <!-- Logo -->
-        <!-- Logo Section -->
         <a href="#" class="flex items-center gap-3 group">
           <div class="relative">
             <div
@@ -345,9 +428,21 @@
 
         <!-- Mobile Menu Button -->
         <button id="mobileMenuBtn"
-          class="lg:hidden text-2xl text-gray-700 p-2 hover:bg-gray-100 rounded-lg transition-colors" aria-label="Menu"
-          aria-expanded="false">
-          <i class="fas fa-bars"></i>
+          class="lg:hidden relative h-10 w-10 flex items-center justify-center rounded-lg hover:bg-gray-100 transition-colors group"
+          aria-label="Menu" aria-expanded="false" aria-controls="mobileMenu">
+          <div class="relative w-6 h-6 flex items-center justify-center">
+            <span
+              class="absolute h-0.5 w-6 bg-gray-700 transform transition-all duration-300 ease-in-out group-aria-expanded:rotate-45 group-aria-expanded:translate-y-0"></span>
+            <span
+              class="absolute h-0.5 w-6 bg-gray-700 transform transition-all duration-300 ease-in-out group-aria-expanded:opacity-0"></span>
+            <span
+              class="absolute h-0.5 w-6 bg-gray-700 transform transition-all duration-300 ease-in-out group-aria-expanded:-rotate-45 group-aria-expanded:translate-y-0"></span>
+
+            <!-- Ícones de fallback -->
+            <i class="fas fa-bars absolute transition-opacity duration-300 group-aria-expanded:opacity-0"></i>
+            <i
+              class="fas fa-times absolute opacity-0 transition-opacity duration-300 group-aria-expanded:opacity-100"></i>
+          </div>
         </button>
       </div>
 
@@ -382,6 +477,28 @@
               <i class="fab fa-whatsapp"></i>
               WhatsApp Rápido
             </a>
+          </div>
+
+          <!-- Redes Sociais no Menu Mobile -->
+          <div class="pt-4 border-t border-gray-200">
+            <p class="text-xs text-gray-500 mb-2 px-4">Siga-nos nas redes sociais</p>
+            <div class="flex justify-center gap-3 px-4">
+              <a href="https://instagram.com/animocreditos" target="_blank"
+                class="h-10 w-10 rounded-full bg-gradient-to-br from-pink-500 to-purple-600 text-white flex items-center justify-center hover:scale-110 transition-transform"
+                aria-label="Instagram">
+                <i class="fab fa-instagram"></i>
+              </a>
+              <a href="https://facebook.com/animocreditos" target="_blank"
+                class="h-10 w-10 rounded-full bg-blue-600 text-white flex items-center justify-center hover:scale-110 transition-transform"
+                aria-label="Facebook">
+                <i class="fab fa-facebook-f"></i>
+              </a>
+              <a href="https://www.linkedin.com/in/%C3%A2nimo-cr%C3%A9ditos-e-investimento-2648343a9/" target="_blank"
+                class="h-10 w-10 rounded-full bg-blue-700 text-white flex items-center justify-center hover:scale-110 transition-transform"
+                aria-label="LinkedIn">
+                <i class="fab fa-linkedin-in"></i>
+              </a>
+            </div>
           </div>
         </div>
       </div>
@@ -679,23 +796,122 @@
           </div>
         </div>
 
+        <!-- Nossa Equipe com Imagens -->
         <div class="flex flex-col items-center gap-6">
           <h3 class="text-xl sm:text-2xl font-display font-bold text-gray-900">Nossa Equipe</h3>
-          <div class="grid grid-cols-2 gap-4 w-full">
-            <div class="rounded-2xl overflow-hidden shadow-md border-2 border-white hover:shadow-lg transition-all">
+          <div class="grid grid-cols-2 gap-4 sm:gap-6 w-full">
+            <!-- Andrea -->
+            <div
+              class="group relative rounded-2xl overflow-hidden shadow-lg border-2 border-white hover:shadow-xl transition-all duration-300">
+              <div class="relative w-full h-48 sm:h-56 overflow-hidden">
+                <!-- Imagem - Substitua pela URL real -->
+                <img
+                  src="https://github.com/duhcwb90-debug/Animo/blob/main/andrea.jpeg?raw=true"
+                  alt="Andrea - Consultora Especializada ANIMO"
+                  class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
+                  loading="lazy"
+                  onerror="this.onerror=null; this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTAwIiBoZWlnaHQ9IjUwMCIgdmlld0JveD0iMCAwIDUwMCA1MDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjUwMCIgaGVpZ2h0PSI1MDAiIGZpbGw9InVybCgjZ3JhZGllbnQpIi8+PHRleHQgeD0iMjUwIiB5PSIyNjAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IndoaXRlIiBmb250LXNpemU9IjEwMCIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXdlaWdodD0iYm9sZCI+QTwvdGV4dD48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImdyYWRpZW50IiB4MT0iMCIgeTE9IjAiIHgyPSI1MDAiIHkyPSI1MDAiPjxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiMwRDZBMEUiLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMyQTlEOEYiLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48L3N2Zz4='">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"></div>
+              </div>
+
+              <!-- Badge fixo -->
+              <div class="absolute top-3 left-3 bg-white/90 backdrop-blur-sm rounded-full px-3 py-1">
+                <p class="text-xs font-bold text-primary">Consultora</p>
+              </div>
+
+              <!-- Informações no hover -->
               <div
-                class="w-full h-48 sm:h-56 bg-gradient-to-br from-secondary/20 to-blueaccent/20 flex items-center justify-center text-gray-400">
-                <i class="fas fa-user-circle text-6xl sm:text-7xl"></i>
+                class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent p-4 text-white transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                <h4 class="font-bold text-lg">Andrea</h4>
+                <p class="text-sm text-gray-200">Especialista em Crédito</p>
+                <div class="flex items-center gap-2 mt-2">
+                  <i class="fas fa-phone text-xs"></i>
+                  <span class="text-xs">(41) 99859-2819</span>
+                </div>
               </div>
             </div>
-            <div class="rounded-2xl overflow-hidden shadow-md border-2 border-white hover:shadow-lg transition-all">
+
+            <!-- Bárbara -->
+            <div
+              class="group relative rounded-2xl overflow-hidden shadow-lg border-2 border-white hover:shadow-xl transition-all duration-300">
+              <div class="relative w-full h-48 sm:h-56 overflow-hidden">
+                <!-- Imagem - Substitua pela URL real -->
+                <img
+                  src="https://github.com/duhcwb90-debug/Animo/blob/main/image.png?raw=true"
+                  alt="Bárbara - Consultora Especializada ANIMO"
+                  class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
+                  loading="lazy"
+                  onerror="this.onerror=null; this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTAwIiBoZWlnaHQ9IjUwMCIgdmlld0JveD0iMCAwIDUwMCA1MDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjUwMCIgaGVpZ2h0PSI1MDAiIGZpbGw9InVybCgjZ3JhZGllbnQyKSIvPjx0ZXh0IHg9IjI1MCIgeT0iMjYwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSJ3aGl0ZSIgZm9udC1zaXplPSIxMDAiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC13ZWlnaHQ9ImJvbGQiPkI8L3RleHQ+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkaWVudDIiIHgxPSIwIiB5MT0iMCIgeDI9IjUwMCIgeTI9IjUwMCI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzAwQjg3NiIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzAwOTY2NSIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjwvc3ZnPg=='">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"></div>
+              </div>
+
+              <!-- Badge fixo -->
+              <div class="absolute top-3 left-3 bg-white/90 backdrop-blur-sm rounded-full px-3 py-1">
+                <p class="text-xs font-bold text-secondary">Consultora</p>
+              </div>
+
+              <!-- Informações no hover -->
               <div
-                class="w-full h-48 sm:h-56 bg-gradient-to-br from-secondary/20 to-blueaccent/20 flex items-center justify-center text-gray-400">
-                <i class="fas fa-user-circle text-6xl sm:text-7xl"></i>
+                class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent p-4 text-white transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                <h4 class="font-bold text-lg">Bárbara</h4>
+                <p class="text-sm text-gray-200">Especialista em Investimentos</p>
+                <div class="flex items-center gap-2 mt-2">
+                  <i class="fas fa-phone text-xs"></i>
+                  <span class="text-xs">(11) 94716-517</span>
+                </div>
               </div>
             </div>
           </div>
-          <p class="text-center text-sm text-gray-600 italic">Andrea & Bárbara - Consultoras Especializadas</p>
+
+          <!--Eduardo-->
+           <div
+              class="group relative rounded-2xl overflow-hidden shadow-lg border-2 border-white hover:shadow-xl transition-all duration-300">
+              <div class="relative w-full h-48 sm:h-56 overflow-hidden">
+                <!-- Imagem - Substitua pela URL real -->
+                <img
+                  src="https://github.com/duhcwb90-debug/Animo/blob/main/eduardo.png?raw=true"
+                  alt="Eduardo - Consultor Especializado ANIMO"
+                  class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
+                  loading="lazy"
+                  onerror="this.onerror=null; this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTAwIiBoZWlnaHQ9IjUwMCIgdmlld0JveD0iMCAwIDUwMCA1MDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjUwMCIgaGVpZ2h0PSI1MDAiIGZpbGw9InVybCgjZ3JhZGllbnQyKSIvPjx0ZXh0IHg9IjI1MCIgeT0iMjYwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSJ3aGl0ZSIgZm9udC1zaXplPSIxMDAiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC13ZWlnaHQ9ImJvbGQiPkI8L3RleHQ+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkaWVudDIiIHgxPSIwIiB5MT0iMCIgeDI9IjUwMCIgeTI9IjUwMCI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzAwQjg3NiIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzAwOTY2NSIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjwvc3ZnPg=='">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"></div>
+              </div>
+
+              <!-- Badge fixo -->
+              <div class="absolute top-3 left-3 bg-white/90 backdrop-blur-sm rounded-full px-3 py-1">
+                <p class="text-xs font-bold text-secondary">Consultor</p>
+              </div>
+
+              <!-- Informações no hover -->
+              <div
+                class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent p-4 text-white transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                <h4 class="font-bold text-lg">Eduardo</h4>
+                <p class="text-sm text-gray-200">Comercial/Dev/consultor</p>
+                <div class="flex items-center gap-2 mt-2">
+                  <i class="fas fa-phone text-xs"></i>
+                  <span class="text-xs">(41) 98784-3893</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Informações visíveis em mobile -->
+          <div class="lg:hidden grid grid-cols-2 gap-4 w-full">
+            <div class="bg-gradient-to-r from-primary/5 to-blueaccent/5 rounded-xl p-4 text-center">
+              <h4 class="font-bold text-gray-900">Andrea</h4>
+              <p class="text-sm text-gray-600">Consultora Especializada</p>
+              <p class="text-xs text-primary font-medium mt-1">
+                <i class="fas fa-phone mr-1"></i>(41) 99859-2819
+              </p>
+            </div>
+            <div class="bg-gradient-to-r from-secondary/5 to-emerald-500/5 rounded-xl p-4 text-center">
+              <h4 class="font-bold text-gray-900">Bárbara</h4>
+              <p class="text-sm text-gray-600">Consultora Especializada</p>
+              <p class="text-xs text-secondary font-medium mt-1">
+                <i class="fas fa-phone mr-1"></i>(11) 94716-517
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -711,7 +927,7 @@
         <div class="w-16 h-1 bg-gradient-to-r from-secondary to-blueaccent rounded-full mx-auto mt-4"></div>
       </div>
 
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 sm:gap-6">
         <!-- WhatsApp -->
         <div class="card-hover bg-white rounded-2xl shadow-smooth p-5 sm:p-6 text-center border border-gray-100">
           <div
@@ -767,6 +983,33 @@
             Banco Central
           </a>
         </div>
+
+        <!-- Redes Sociais -->
+        <div class="card-hover bg-white rounded-2xl shadow-smooth p-5 sm:p-6 text-center border border-gray-100">
+          <div
+            class="mx-auto mb-4 h-12 w-12 sm:h-14 sm:w-14 flex items-center justify-center rounded-full bg-gradient-to-br from-purple-500/10 to-pink-500/10 text-purple-600 text-2xl sm:text-3xl">
+            <i class="fas fa-hashtag"></i>
+          </div>
+          <h3 class="text-base sm:text-lg font-bold text-gray-900 mb-2">Redes Sociais</h3>
+          <p class="text-xs sm:text-sm text-gray-600 mb-4">Siga-nos e fique por dentro das novidades</p>
+          <div class="flex justify-center gap-4">
+            <a href="https://instagram.com/animocreditos" target="_blank"
+              class="h-10 w-10 rounded-full bg-gradient-to-br from-pink-500 to-purple-600 text-white flex items-center justify-center hover:scale-110 transition-transform shadow-sm hover:shadow-md"
+              aria-label="Instagram">
+              <i class="fab fa-instagram"></i>
+            </a>
+            <a href="https://facebook.com/animocreditos" target="_blank"
+              class="h-10 w-10 rounded-full bg-blue-600 text-white flex items-center justify-center hover:scale-110 transition-transform shadow-sm hover:shadow-md"
+              aria-label="Facebook">
+              <i class="fab fa-facebook-f"></i>
+            </a>
+            <a href="https://www.linkedin.com/in/%C3%A2nimo-cr%C3%A9ditos-e-investimento-2648343a9/" target="_blank"
+              class="h-10 w-10 rounded-full bg-blue-700 text-white flex items-center justify-center hover:scale-110 transition-transform shadow-sm hover:shadow-md"
+              aria-label="LinkedIn">
+              <i class="fab fa-linkedin-in"></i>
+            </a>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -800,7 +1043,7 @@
   <!-- Footer -->
   <footer class="bg-dark text-gray-300 py-12 sm:py-16">
     <div class="max-w-7xl mx-auto px-4 sm:px-6">
-      <div class="grid md:grid-cols-4 gap-8 sm:gap-12 mb-12">
+      <div class="grid md:grid-cols-5 gap-8 sm:gap-12 mb-12">
         <div>
           <h3 class="text-xl sm:text-2xl font-display font-bold text-white mb-3 sm:mb-4 gradient-text">ANIMO</h3>
           <p class="text-xs sm:text-sm mb-4 leading-relaxed">
@@ -842,6 +1085,28 @@
             </li>
           </ul>
         </div>
+
+        <div>
+          <h4 class="text-base sm:text-lg font-bold text-white mb-4">Redes Sociais</h4>
+          <div class="flex gap-3">
+            <a href="https://instagram.com/animocreditos" target="_blank"
+              class="h-10 w-10 rounded-full bg-gradient-to-br from-pink-500 to-purple-600 text-white flex items-center justify-center hover:scale-110 transition-transform"
+              aria-label="Instagram">
+              <i class="fab fa-instagram"></i>
+            </a>
+            <a href="https://facebook.com/animocreditos" target="_blank"
+              class="h-10 w-10 rounded-full bg-blue-600 text-white flex items-center justify-center hover:scale-110 transition-transform"
+              aria-label="Facebook">
+              <i class="fab fa-facebook-f"></i>
+            </a>
+            <a href="https://www.linkedin.com/in/%C3%A2nimo-cr%C3%A9ditos-e-investimento-2648343a9/" target="_blank"
+              class="h-10 w-10 rounded-full bg-blue-700 text-white flex items-center justify-center hover:scale-110 transition-transform"
+              aria-label="LinkedIn">
+              <i class="fab fa-linkedin-in"></i>
+            </a>
+          </div>
+          <p class="text-xs text-gray-500 mt-3">@animocreditos</p>
+        </div>
       </div>
 
       <div class="border-t border-gray-700 pt-6 sm:pt-8 text-center text-xs sm:text-sm text-gray-500">
@@ -853,106 +1118,279 @@
     </div>
   </footer>
 
-  <!-- JavaScript -->
+  <!-- JavaScript Aprimorado -->
   <script>
     document.addEventListener('DOMContentLoaded', function () {
-      // Menu Mobile
+      // Elementos do menu
       const mobileMenuBtn = document.getElementById('mobileMenuBtn');
       const mobileMenu = document.getElementById('mobileMenu');
       const mobileMenuIcon = mobileMenuBtn?.querySelector('i');
+      const header = document.querySelector('header');
+      const navLinks = document.querySelectorAll('a[href^="#"]');
 
+      // Estado do menu
+      let isMobileMenuOpen = false;
+      let mobileMenuBackdrop = null;
+
+      // Criar backdrop para menu mobile
+      function createMobileMenuBackdrop() {
+        if (!mobileMenuBackdrop) {
+          mobileMenuBackdrop = document.createElement('div');
+          mobileMenuBackdrop.className = 'mobile-menu-backdrop lg:hidden';
+          mobileMenuBackdrop.addEventListener('click', closeMobileMenu);
+          document.body.appendChild(mobileMenuBackdrop);
+        }
+      }
+
+      // Remover backdrop
+      function removeMobileMenuBackdrop() {
+        if (mobileMenuBackdrop && document.body.contains(mobileMenuBackdrop)) {
+          mobileMenuBackdrop.remove();
+          mobileMenuBackdrop = null;
+        }
+      }
+
+      // Abrir menu mobile
+      function openMobileMenu() {
+        if (!mobileMenu || !mobileMenuBtn) return;
+
+        mobileMenu.classList.remove('hidden');
+        mobileMenu.classList.add('mobile-menu-enter');
+        mobileMenuBtn.setAttribute('aria-expanded', 'true');
+        document.body.style.overflow = 'hidden';
+        isMobileMenuOpen = true;
+
+        // Criar backdrop
+        createMobileMenuBackdrop();
+      }
+
+      // Fechar menu mobile
+      function closeMobileMenu() {
+        if (!mobileMenu || !mobileMenuBtn) return;
+
+        mobileMenu.classList.add('hidden');
+        mobileMenu.classList.remove('mobile-menu-enter');
+        mobileMenuBtn.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = 'auto';
+        isMobileMenuOpen = false;
+
+        // Remover backdrop
+        removeMobileMenuBackdrop();
+      }
+
+      // Toggle menu mobile
+      function toggleMobileMenu() {
+        if (isMobileMenuOpen) {
+          closeMobileMenu();
+        } else {
+          openMobileMenu();
+        }
+      }
+
+      // Fechar menu ao clicar fora
+      function closeMobileMenuOnClickOutside(e) {
+        if (isMobileMenuOpen &&
+          !mobileMenu.contains(e.target) &&
+          !mobileMenuBtn.contains(e.target)) {
+          closeMobileMenu();
+        }
+      }
+
+      // Inicializar menu mobile
       if (mobileMenuBtn && mobileMenu) {
-        mobileMenuBtn.addEventListener('click', function () {
-          const isExpanded = mobileMenuBtn.getAttribute('aria-expanded') === 'true';
-
-          // Toggle menu visibility
-          mobileMenu.classList.toggle('hidden');
-          mobileMenuBtn.setAttribute('aria-expanded', !isExpanded);
-
-          // Toggle icon
-          if (mobileMenuIcon) {
-            mobileMenuIcon.classList.toggle('fa-bars');
-            mobileMenuIcon.classList.toggle('fa-times');
-          }
+        mobileMenuBtn.addEventListener('click', function (e) {
+          e.stopPropagation();
+          toggleMobileMenu();
         });
 
-        // Fechar menu ao clicar em link
+        // Fechar menu ao clicar em links
         mobileMenu.querySelectorAll('a').forEach(link => {
           link.addEventListener('click', () => {
-            mobileMenu.classList.add('hidden');
-            mobileMenuBtn.setAttribute('aria-expanded', 'false');
-            if (mobileMenuIcon) {
-              mobileMenuIcon.classList.remove('fa-times');
-              mobileMenuIcon.classList.add('fa-bars');
+            if (isMobileMenuOpen) {
+              closeMobileMenu();
             }
           });
         });
-      }
 
-      // Animação dos Stats
-      const statsSection = document.getElementById('stats');
-      const statNumbers = document.querySelectorAll('.stat-number');
-
-      if (statsSection && statNumbers.length > 0) {
-        const observer = new IntersectionObserver((entries) => {
-          entries.forEach(entry => {
-            if (entry.isIntersecting) {
-              statNumbers.forEach((num, index) => {
-                setTimeout(() => {
-                  num.classList.add('visible');
-                }, index * 300);
-              });
-              observer.disconnect();
-            }
-          });
-        }, {
-          threshold: 0.5,
-          rootMargin: '0px 0px -50px 0px'
-        });
-
-        observer.observe(statsSection);
-      }
-
-      // Rolagem suave para âncoras
-      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-          const href = this.getAttribute('href');
-
-          if (href === '#' || href === '') return;
-
-          const targetElement = document.querySelector(href);
-          if (targetElement) {
-            e.preventDefault();
-
-            // Fechar menu mobile se aberto
-            if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
-              mobileMenu.classList.add('hidden');
-              mobileMenuBtn.setAttribute('aria-expanded', 'false');
-              if (mobileMenuIcon) {
-                mobileMenuIcon.classList.remove('fa-times');
-                mobileMenuIcon.classList.add('fa-bars');
-              }
-            }
-
-            window.scrollTo({
-              top: targetElement.offsetTop - 80,
-              behavior: 'smooth'
-            });
+        // Fechar ao pressionar ESC
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape' && isMobileMenuOpen) {
+            closeMobileMenu();
           }
         });
-      });
 
-      // Efeito de scroll no header
-      const header = document.querySelector('header');
-      window.addEventListener('scroll', function () {
-        if (window.scrollY > 50) {
-          header.classList.add('shadow-lg');
-          header.classList.remove('shadow-sm');
+        // Fechar ao redimensionar a janela (se ficar muito grande)
+        window.addEventListener('resize', () => {
+          if (window.innerWidth >= 1024 && isMobileMenuOpen) {
+            closeMobileMenu();
+          }
+        });
+      }
+
+      // Sistema de menu ativo baseado no scroll
+      function setActiveNavLink() {
+        const sections = document.querySelectorAll('section[id]');
+        const headerHeight = header.offsetHeight;
+        const scrollPos = window.scrollY + headerHeight + 50;
+
+        let currentSectionId = '';
+
+        sections.forEach(section => {
+          const sectionTop = section.offsetTop;
+          const sectionHeight = section.clientHeight;
+          const sectionId = section.getAttribute('id');
+
+          if (scrollPos >= sectionTop && scrollPos < sectionTop + sectionHeight) {
+            currentSectionId = sectionId;
+          }
+        });
+
+        // Remover ativo de todos os links
+        navLinks.forEach(link => {
+          link.classList.remove('active', 'text-primary', 'font-semibold');
+          link.classList.add('text-gray-700');
+        });
+
+        // Adicionar ativo ao link correspondente
+        if (currentSectionId) {
+          const activeLinks = document.querySelectorAll(`a[href="#${currentSectionId}"]`);
+          activeLinks.forEach(activeLink => {
+            activeLink.classList.add('active', 'text-primary', 'font-semibold');
+            activeLink.classList.remove('text-gray-700');
+          });
         } else {
-          header.classList.remove('shadow-lg');
-          header.classList.add('shadow-sm');
+          // Se não estiver em nenhuma seção, ativar o primeiro link
+          const firstLink = document.querySelector('a[href="#services"]');
+          if (firstLink && window.scrollY < 100) {
+            firstLink.classList.add('active', 'text-primary', 'font-semibold');
+            firstLink.classList.remove('text-gray-700');
+          }
         }
-      });
+      }
+
+      // Scroll suave aprimorado
+      function initSmoothScroll() {
+        navLinks.forEach(link => {
+          link.addEventListener('click', function (e) {
+            const href = this.getAttribute('href');
+
+            if (href === '#' || href === '') return;
+
+            const targetElement = document.querySelector(href);
+            if (targetElement) {
+              e.preventDefault();
+
+              // Fechar menu mobile se aberto
+              if (isMobileMenuOpen) {
+                closeMobileMenu();
+              }
+
+              const headerHeight = header.offsetHeight;
+              const targetPosition = targetElement.offsetTop - headerHeight;
+
+              window.scrollTo({
+                top: targetPosition,
+                behavior: 'smooth'
+              });
+
+              // Atualizar URL sem recarregar a página
+              history.pushState(null, null, href);
+
+              // Atualizar menu ativo após scroll
+              setTimeout(() => {
+                setActiveNavLink();
+              }, 1000);
+            }
+          });
+        });
+      }
+
+      // Animação dos números das estatísticas
+      function initStatsAnimation() {
+        const statsSection = document.getElementById('stats');
+        const statNumbers = document.querySelectorAll('.stat-number');
+
+        if (statsSection && statNumbers.length > 0) {
+          const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+              if (entry.isIntersecting) {
+                statNumbers.forEach((num, index) => {
+                  setTimeout(() => {
+                    num.classList.add('visible');
+
+                    // Animar contagem dos números
+                    const finalValue = num.textContent;
+                    if (finalValue.match(/^\d+/)) {
+                      const target = parseInt(finalValue.replace(/[^\d]/g, ''));
+                      animateCount(num, target, finalValue.includes('+') ? '+' : '');
+                    }
+                  }, index * 300);
+                });
+                observer.disconnect();
+              }
+            });
+          }, {
+            threshold: 0.5,
+            rootMargin: '0px 0px -50px 0px'
+          });
+
+          observer.observe(statsSection);
+        }
+      }
+
+      // Função para animar contagem de números
+      function animateCount(element, target, suffix = '') {
+        const duration = 1500;
+        const steps = 60;
+        const increment = target / steps;
+        let current = 0;
+
+        const timer = setInterval(() => {
+          current += increment;
+          if (current >= target) {
+            current = target;
+            clearInterval(timer);
+          }
+          element.textContent = Math.floor(current) + suffix;
+        }, duration / steps);
+      }
+
+      // Efeito de shadow no header ao scrollar
+      function handleHeaderScroll() {
+        if (window.scrollY > 50) {
+          header.classList.add('shadow-lg', 'bg-white/95', 'backdrop-blur-md');
+          header.classList.remove('shadow-sm', 'bg-white/90');
+        } else {
+          header.classList.remove('shadow-lg', 'bg-white/95', 'backdrop-blur-md');
+          header.classList.add('shadow-sm', 'bg-white/90');
+        }
+      }
+
+      // Inicializar tudo
+      function init() {
+        initSmoothScroll();
+        initStatsAnimation();
+
+        // Event listeners
+        window.addEventListener('scroll', () => {
+          handleHeaderScroll();
+          setActiveNavLink();
+        });
+
+        // Inicializar estado do header
+        handleHeaderScroll();
+        setActiveNavLink();
+
+        // Prevenir conflito de scroll quando menu aberto
+        document.addEventListener('touchmove', function (e) {
+          if (isMobileMenuOpen) {
+            e.preventDefault();
+          }
+        }, { passive: false });
+      }
+
+      // Iniciar quando o DOM estiver pronto
+      init();
     });
   </script>
   <div
